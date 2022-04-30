@@ -686,7 +686,10 @@
     </array>
 
     <array name="config_sfps_sensor_props_0" translatable="false">
-        <item>890</item>
+        <item></item> <!--item>displayId</item-->
+        <item>1080</item> <!--item>sensorLocationX</item-->
+        <item>920</item> <!--item>sensorLocationY</item-->
+        <item>200</item> <!--item>sensorRadius</item-->
     </array>
 
     <!-- The list of packages to automatically opt out of refresh rates higher than 60hz because
