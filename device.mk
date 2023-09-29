@@ -231,7 +231,7 @@ PRODUCT_PACKAGES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light-service.selene
+    android.hardware.light-service.xiaomi
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -407,7 +407,8 @@ PRODUCT_SOONG_NAMESPACES += \
     $(DEVICE_PATH) \
     hardware/google/interfaces \
     hardware/google/pixel \
-    hardware/mediatek
+    hardware/mediatek \
+    hardware/xiaomi
 
 # Thermal
 PRODUCT_PACKAGES += \
