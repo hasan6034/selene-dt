@@ -274,7 +274,8 @@ PRODUCT_PACKAGES += \
     libcodec2_vndk.vendor \
     libstagefright_softomx_plugin.vendor \
     libsfplugin_ccodec_utils.vendor \
-    ibstagefright_foundation-v33
+    libcodec2_soft_common.vendor \
+    libstagefright_foundation-v33
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
