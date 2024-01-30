@@ -123,9 +123,6 @@ TARGET_BOARD_PLATFORM := mt6768
 BOARD_HAS_MTK_HARDWARE := true
 BOARD_VENDOR := xiaomi
 
-# Power
-TARGET_TAP_TO_WAKE_NODE := "/sys/touchpanel/double_tap"
-
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/system_ext.prop
