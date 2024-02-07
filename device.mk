@@ -437,25 +437,12 @@ PRODUCT_PACKAGES += \
 
 # Wi-Fi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi.supplicant@1.0.vendor \
-    android.hardware.wifi.supplicant@1.1.vendor \
-    android.hardware.wifi.supplicant@1.2.vendor \
-    android.hardware.wifi.supplicant@1.3.vendor \
-    android.hardware.wifi.hostapd@1.0.vendor \
-    android.hardware.wifi.hostapd@1.1.vendor \
-    android.hardware.wifi.hostapd@1.2.vendor
-
-PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service-lazy.selene
-
-PRODUCT_PACKAGES += \
-    libkeystore-wifi-hidl \
-    libkeystore-engine-wifi-hidl
+    wpa_supplicant \
+    hostapd \
+    android.hardware.wifi@1.0-service-lazy
 
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
-    $(DEVICE_PATH)/configs/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf \
-    $(DEVICE_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/wifi/,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/xiaomi/selene/selene-vendor.mk)
