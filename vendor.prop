@@ -248,6 +248,7 @@ ro.vendor.mtk_wfd_support=1
 ro.vendor.wfd.dummy.enable=1
 ro.vendor.wfd.iframesize.level=0
 ro.vendor.wlan.gen=gen4m
+ro.vendor.wlan.chrdev=wmt_chrdev_wifi
 ro.vendor.wifi.sap.interface=ap0
 vendor.connsys.driver.ready=no
 wifi.concurrent.interface=ap0
