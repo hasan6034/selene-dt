@@ -104,6 +104,11 @@ function blob_fixup {
         vendor/lib*/hw/android.hardware.thermal@2.0-impl.so)
             "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
             ;;
+        vendor/lib*/libaalservice.so|\
+        vendor/lib64/libcam.utils.sensorprovider.so|\
+        vendor/bin/mnld)
+            grep -q "libshim_sensors.so" "$2" || "$PATCHELF" --add-needed "libshim_sensors.so" "$2"
+            ;;
     esac
 }
 
