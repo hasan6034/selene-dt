@@ -95,9 +95,6 @@ function blob_fixup {
         lib/libshowlogo.so)
             "${PATCHELF}" --add-needed "libshim_showlogo.so" "${2}"
             ;;
-        lib/libsink.so)
-            "${PATCHELF}" --add-needed "libshim_vtservice.so" "${2}"
-            ;;
         vendor/lib/libMtkOmxVdecEx.so)
             "${PATCHELF}" --replace-needed "libui.so" "libui-v32.so" "$2"
             ;;
