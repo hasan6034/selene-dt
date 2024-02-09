@@ -419,7 +419,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.1-service.selene
+    android.hardware.usb-service.mediatek-legacy
 
 # VNDK
 PRODUCT_PACKAGES += \
