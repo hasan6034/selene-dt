@@ -120,9 +120,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libsuspend
 
-PRODUCT_PACKAGES += \
-    libshim_showlogo
-
 # Display
 TARGET_SCREEN_DENSITY := 440
 TARGET_SCREEN_WIDTH := 1080
@@ -159,6 +156,7 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@4.0.vendor
 
 PRODUCT_PACKAGES += \
+    libdrm \
     libdrm.vendor
 
 # Dynamic Partitions
@@ -190,6 +188,7 @@ PRODUCT_PACKAGES += \
     android.hardware.health@2.1-service
 
 PRODUCT_PACKAGES += \
+    android.hardware.health-V1-ndk \
     android.hardware.health@2.0
 
 # HIDL
