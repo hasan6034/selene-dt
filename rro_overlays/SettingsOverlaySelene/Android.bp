@@ -11,7 +11,6 @@
 
 runtime_resource_overlay {
     name: "SettingsOverlaySelene",
-    sdk_version: "current",
     resource_dirs: ["res"],
     vendor: true,
 }
