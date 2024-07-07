@@ -50,6 +50,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     libalsautils \
+    libldacBT_bco \
     libtinycompress \
     libtinyxml \
     tinymix
