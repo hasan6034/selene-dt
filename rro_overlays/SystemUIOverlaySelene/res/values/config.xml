@@ -29,9 +29,6 @@
     <!-- For how long the lock screen can be on before the display turns off. -->
     <integer name="config_lockScreenDisplayTimeout">7000</integer>
 
-    <!-- Camera 1 is the front camera on selene -->
-    <string translatable="false" name="config_protectedCameraId">1</string>
-
     <!-- FPSInfoService FPS node file path -->
     <string name="config_fpsInfoSysNode" translatable="false">/sys/module/primary_display/parameters/display_framerate_main</string>
 
