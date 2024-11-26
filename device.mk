@@ -52,7 +52,7 @@ PRODUCT_PACKAGES += \
     audio.usb.default
 
 PRODUCT_PACKAGES += \
-    libalsautils_legacy \
+    libalsautils \
     libtinycompress \
     libtinyxml \
     tinymix
