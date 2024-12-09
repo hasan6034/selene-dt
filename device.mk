@@ -56,6 +56,20 @@ PRODUCT_PACKAGES += \
     tinymix
 
 PRODUCT_PACKAGES += \
+    libprocessgroup.vendor \
+    libnetutils.vendor \
+    libjsoncpp.vendor \
+    libsqlite.vendor \
+    libpower.vendor \
+    libcurl.vendor \
+    libion.vendor \
+    libssl.vendor \
+    libcamera_metadata.vendor \
+    libutilscallstack.vendor \
+    libpng.vendor \
+    libaudioroute.vendor
+
+PRODUCT_PACKAGES += \
     MtkInCallService
 
 PRODUCT_COPY_FILES += \
