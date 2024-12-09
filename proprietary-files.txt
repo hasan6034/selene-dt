@@ -18,6 +18,8 @@ vendor/lib64/hw/audio.primary.mt6768.so
 vendor/lib64/hw/audio.r_submix.mt6768.so
 vendor/lib64/hw/audio.usb.mt6768.so
 vendor/lib64/vendor.mediatek.hardware.audio@6.1.so
+vendor/lib/libalsautils.so:vendor/lib/libalsautils-v30.so
+vendor/lib64/libalsautils.so:vendor/lib64/libalsautils-v30.so
 
 # Audio-configs
 vendor/etc/audio_param/AudioParamOptions.xml
