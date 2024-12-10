@@ -449,6 +449,25 @@ vendor/lib64/libwebrtc_audio_preprocessing.so
 vendor/lib64/soundfx/libaudiopreprocessing.so
 vendor/lib64/soundfx/libaudiopreprocessing_mtk.so
 
+#Media(C2)
+vendor/bin/hw/android.hardware.media.c2@1.2-mediatek
+vendor/etc/init/android.hardware.media.c2@1.2-mediatek.rc
+vendor/lib64/libcodec2_hidl@1.0.so
+vendor/lib64/libcodec2_hidl@1.1.so
+vendor/lib64/libcodec2_hidl@1.2.so
+vendor/lib64/libcodec2_hidl_plugin.so
+vendor/lib64/libcodec2_soft_common.so
+vendor/lib64/libcodec2_vndk.so
+vendor/lib/libcodec2_mtk_c2store.so
+vendor/lib/libcodec2_mtk_vdec.so
+vendor/lib/libcodec2_mtk_venc.so
+vendor/lib/libcodec2_vpp_qt_plugin.so
+vendor/lib/libcodec2_vpp_rs_plugin.so
+
+#Media
+vendor/lib/libvpu5.so
+vendor/lib64/libvpu.so
+
 # Bluetooth
 vendor/bin/hw/android.hardware.bluetooth@1.0-service-mediatek
 vendor/etc/init/android.hardware.bluetooth@1.0-service-mediatek.rc
