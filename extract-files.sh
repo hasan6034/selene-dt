@@ -24,6 +24,67 @@ if [ ! -f "${HELPER}" ]; then
 fi
 source "${HELPER}"
 
+function blob_fixup {
+    case "$1" in
+    	vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc)
+            echo "$(cat ${2}) input" > "${2}"
+       	    ;;
+        vendor/bin/hw/camerahalserver)
+            "$PATCHELF" --replace-needed "libutils.so" "libutils-v30.so" "$2"
+            "${PATCHELF}" --replace-needed "libbinder.so" "libbinder-v32.so" "${2}"
+            "${PATCHELF}" --replace-needed "libhidlbase.so" "libhidlbase-v32.so" "${2}"
+            ;;
+        vendor/lib64/libmtkcam_stdutils.so) \
+        vendor/lib64/hw/android.hardware.camera.provider@2.6-impl-mediatek.so)
+            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
+            ;;
+        vendor/lib*/hw/audio.primary.mt6768.so)
+            "${PATCHELF}" --add-needed "libshim_audio.so" "${2}"
+            "${PATCHELF}" --replace-needed "libalsautils.so" "libalsautils-v30.so" "${2}"
+            ;;
+        vendor/lib*/hw/audio.usb.mt6768.so)
+            "${PATCHELF}" --replace-needed "libalsautils.so" "libalsautils-v30.so" "${2}"
+            ;;
+        vendor/bin/hw/android.hardware.keymaster@4.0-service.beanpod)
+            "${PATCHELF}" --add-needed "libshim_beanpod.so" "${2}"
+            ;;
+        vendor/lib*/hw/dfps.mt6768.so)
+            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
+            ;;
+        vendor/lib*/hw/vendor.mediatek.hardware.pq@2.6-impl.so)
+            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
+            ;;
+	vendor/lib64/libmi_watermark.so)
+            "${PATCHELF}" --add-needed "libshim_watermark.so" "${2}"
+            ;;
+        vendor/lib/libMtkOmxVdecEx.so)
+            "${PATCHELF}" --replace-needed "libui.so" "libui-v32.so" "$2"
+            ;;
+        vendor/lib64/hw/android.hardware.thermal@2.0-impl.so)
+            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
+            ;;
+        vendor/lib64/libwifi-hal-mtk.so)
+            "$PATCHELF" --set-soname libwifi-hal-mtk.so "${2}"
+            ;;
+        vendor/lib*/libaalservice.so|\
+        vendor/lib*/libcam.utils.sensorprovider.so)
+            "$PATCHELF" --add-needed "libshim_sensors.so" "$2"
+            ;;
+        system_ext/lib64/libsource.so)
+            grep -q "libui_shim.so" "${2}" || "${PATCHELF}" --add-needed "libui_shim.so" "${2}"
+            ;;
+        vendor/lib64/libmtkcam_featurepolicy.so)
+            # evaluateCaptureConfiguration()
+            sed -i "s/\x34\xE8\x87\x40\xB9/\x34\x28\x02\x80\x52/" "$2"
+            ;;
+        vendor/bin/mnld)
+            ;&
+        vendor/lib64/libcam.utils.sensorprovider.so)
+            "${PATCHELF}" --replace-needed "libsensorndkbridge.so" "libsensorndkbridge-v30.so" "${2}"
+            ;;
+    esac
+}
+
 # Default to sanitizing the vendor folder before extraction
 CLEAN_VENDOR=true
 
@@ -52,74 +113,6 @@ done
 if [ -z "${SRC}" ]; then
     SRC="adb"
 fi
-
-function blob_fixup {
-    case "$1" in
-        vendor/bin/hw/android.hardware.media.c2@1.2-mediatek)
-            "$PATCHELF" --add-needed "libstagefright_foundation-v33.so" "$2"
-            ;;
-        system_ext/lib64/libsource.so)
-            grep -q "libui_shim.so" "${2}" || "${PATCHELF}" --add-needed "libui_shim.so" "${2}"
-            ;;
-        vendor/lib64/libwifi-hal-mtk.so)
-            "$PATCHELF" --set-soname libwifi-hal-mtk.so "${2}"
-            ;;
-	vendor/lib64/libmtkcam_stdutils.so)
-            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
-            ;;
-        vendor/lib*/hw/audio.primary.mt6768.so)
-            "${PATCHELF}" --add-needed "libshim_audio.so" "${2}"
-            "${PATCHELF}" --replace-needed "libalsautils.so" "libalsautils-v30.so" "${2}"
-            ;;
-        vendor/lib*/hw/audio.usb.mt6768.so)
-            "${PATCHELF}" --replace-needed "libalsautils.so" "libalsautils-v30.so" "${2}"
-	        ;;
-        vendor/lib*/hw/dfps.mt6768.so)
-            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
-            ;;
-        vendor/lib*/hw/vendor.mediatek.hardware.pq@2.6-impl.so |\
-        vendor/lib*/hw/android.hardware.thermal@2.0-impl.so)
-            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
-            ;;
-	vendor/lib64/libmi_watermark.so)
-            "${PATCHELF}" --add-needed "libpiex_shim.so" "${2}"
-            ;;
-        vendor/lib64/libcam.halsensor.so)
-            "${PATCHELF}" --add-needed "libshim_utils.so" "${2}"
-            ;;
-        vendor/lib64/libgf_hal.so)
-            sed -i 's|\x00\x14\xa0\x83_\xb8\xfd{C\xa9\xff\x03\x01\x91\xc0\x03_\xd6\xff\x83\x01\xd1\xfd{\x05\xa9\xfdC\x01\x91|\x00\x14\xa0\x83_\xb8\xfd{C\xa9\xff\x03\x01\x91\xc0\x03_\xd6\x00\x00\xe0\xd2\xc0\x03_\xd6\xfdC\x01\x91|g' "${2}"
-            ;;
-        vendor/lib64/hw/fingerprint.selene.so)
-            sed -i 's|\xc0\x03_\xd6\x00\x00\x00\x00\xff\x03\x01\xd1\xfd{\x02\xa9|\xc0\x03_\xd6\x00\x00\x00\x00\xc0\x03_\xd6\xfd{\x02\xa9|g' "${2}"
-            ;;
-        vendor/bin/hw/android.hardware.keymaster@4.0-service.beanpod)
-            "${PATCHELF}" --add-needed "libshim_beanpod.so" "${2}"
-            ;;
-        vendor/bin/hw/vendor.mediatek.hardware.mtkpower@1.0-service)
-            "${PATCHELF}" --replace-needed "android.hardware.power-V1-ndk_platform.so" "android.hardware.power-V1-ndk.so" "${2}"
-            ;;
-        vendor/lib/libMtkOmxVdecEx.so)
-            "${PATCHELF}" --replace-needed "libui.so" "libui-v32.so" "$2"
-            ;;
-        vendor/lib*/hw/android.hardware.thermal@2.0-impl.so)
-            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
-            ;;
-        vendor/lib*/libaalservice.so|\
-        vendor/lib64/libcam.utils.sensorprovider.so|\
-        vendor/bin/mnld)
-            grep -q "libshim_sensors.so" "$2" || "$PATCHELF" --add-needed "libshim_sensors.so" "$2"
-            ;;
-        vendor/lib64/hw/android.hardware.camera.provider@2.6-impl-mediatek.so)
-            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
-            ;;
-        vendor/bin/hw/camerahalserver)
-            "$PATCHELF" --replace-needed "libutils.so" "libutils-v30.so" "$2"
-            "${PATCHELF}" --replace-needed "libbinder.so" "libbinder-v32.so" "${2}"
-            "${PATCHELF}" --replace-needed "libhidlbase.so" "libhidlbase-v32.so" "${2}"
-            ;;
-    esac
-}
 
 # Initialize the helper
 setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}"
