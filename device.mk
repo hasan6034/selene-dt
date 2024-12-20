@@ -152,7 +152,8 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@6.0-util.vendor \
     android.hardware.audio@6.0.vendor \
     libtextclassifier_hash.vendor \
-    libshim_watermark
+    libshim_watermark \
+    libcrypto_shim.vendor
 
 # VNDK v30 Copy Files
 PRODUCT_COPY_FILES += \

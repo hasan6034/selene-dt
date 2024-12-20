@@ -55,6 +55,10 @@ fi
 
 function blob_fixup {
     case "$1" in
+        vendor/lib*/libwvhidl.so | vendor/lib*/mediadrm/libwvdrmengine.so)
+            [ "$2" = "" ] && return 0
+            grep -q "libcrypto_shim.so" "${2}" || "${PATCHELF}" --add-needed "libcrypto_shim.so" "${2}"
+            ;;
         vendor/bin/hw/camerahalserver)
             "${PATCHELF}" --replace-needed "libutils.so" "libutils-v30.so" "$2"
             "${PATCHELF}" --replace-needed "libbinder.so" "libbinder-v32.so" "${2}"
