@@ -55,11 +55,16 @@ fi
 
 function blob_fixup {
     case "$1" in
+        vendor/bin/hw/camerahalserver)
+            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v30.so" "$2"
+            "${PATCHELF}" --replace-needed "libbinder.so" "libbinder-v32.so" "${2}"
+            "${PATCHELF}" --replace-needed "libhidlbase.so" "libhidlbase-v32.so" "${2}"
+            ;;
         system_ext/lib64/libsource.so)
             grep -q "libui_shim.so" "${2}" || "${PATCHELF}" --add-needed "libui_shim.so" "${2}"
             ;;
         vendor/lib64/libwifi-hal-mtk.so)
-            "$PATCHELF" --set-soname libwifi-hal-mtk.so "${2}"
+            "${PATCHELF}" --set-soname libwifi-hal-mtk.so "${2}"
             ;;
 	vendor/lib64/libmtkcam_stdutils.so)
             "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
@@ -78,8 +83,8 @@ function blob_fixup {
         vendor/lib*/hw/android.hardware.thermal@2.0-impl.so)
             "${PATCHELF}" --replace-needed "libutils.so" "libutils-v32.so" "${2}"
             ;;
-	vendor/lib64/libmi_watermark.so)
-            "${PATCHELF}" --add-needed "libpiex_shim.so" "${2}"
+	    vendor/lib64/libmi_watermark.so)
+            "${PATCHELF}" --add-needed "libshim_watermark.so" "${2}"
             ;;
         vendor/lib64/libgf_hal.so)
             sed -i 's|\x00\x14\xa0\x83_\xb8\xfd{C\xa9\xff\x03\x01\x91\xc0\x03_\xd6\xff\x83\x01\xd1\xfd{\x05\xa9\xfdC\x01\x91|\x00\x14\xa0\x83_\xb8\xfd{C\xa9\xff\x03\x01\x91\xc0\x03_\xd6\x00\x00\xe0\xd2\xc0\x03_\xd6\xfdC\x01\x91|g' "${2}"
