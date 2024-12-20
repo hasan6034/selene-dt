@@ -40,13 +40,3 @@ cc_library_shared {
     ],
     include_dirs: [ "system/keymaster/include" ],
 }
-
-cc_library_shared {
-    name: "libshim_utils",
-    srcs: ["libshim_utils.cpp"],
-    vendor: true,
-    compile_multilib: "64",
-    shared_libs: [
-        "libutils",
-    ],
-}

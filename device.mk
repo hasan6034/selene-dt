@@ -106,8 +106,7 @@ PRODUCT_PACKAGES += \
     libdng_sdk.vendor
 
 PRODUCT_PACKAGES += \
-    libpiex_shim \
-    libshim_utils
+    libpiex_shim
 
 # Cgroup
 PRODUCT_COPY_FILES += \
